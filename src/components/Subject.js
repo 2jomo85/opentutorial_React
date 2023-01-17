@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-function Subject(props) {
-  return (
-    <header>
-      <h1>{props.title}</h1>
-      {props.sub}
-    </header>
-  );
+class Subject extends Component {
+  render() {
+    return (
+      <header>
+        <h1>{this.props.title}</h1>
+        {this.props.sub}
+      </header>
+    )
+  }
 }
 
-export default Subject;
+export default Subject
