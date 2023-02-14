@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 
 function Header(props) {
     return (
@@ -28,7 +29,7 @@ function Nav(props) {
                     href={'/read' + t.id}
                     onClick={(event) => {
                         event.preventDefault();
-                        props.onChangeNode(event.target.id);
+                        props.onChangeNode(Number(event.target.id));
                     }}
                 >
                     {t.title}
@@ -52,26 +53,46 @@ function Article(props) {
 }
 
 function App() {
+    // const _mode = useState('WELCOME');
+    // const mode = _mode[0];
+    // const setMode = _mode[1];
+    const [mode, setMode] = useState('WELCOMEL');
+    const [id, setId] = useState(null);
     const topics = [
         { id: 1, title: 'HTML', body: 'HTML is HyperText Markup Language.' },
         { id: 2, title: 'CSS', body: 'CSS is design.' },
         { id: 3, title: 'JavaScript', body: 'JavaScript is for interactive.' },
     ];
+    let content = null;
+    if (mode === 'WELCOME') {
+        content = <Article title="Welcome" body="Hello, WEB"></Article>;
+    } else if (mode === 'READ') {
+        let title,
+            body = null;
+        for (let i = 0; i < topics.length; i++) {
+            if (topics[i].id === id) {
+                title = topics[i].title;
+                body = topics[i].body;
+            }
+        }
+        content = <Article title={title} body={body}></Article>;
+    }
     return (
         <div>
             <Header
                 title="WEB"
                 onChangeNode={() => {
-                    alert('Header');
+                    setMode('WELCOME');
                 }}
             ></Header>
             <Nav
                 topics={topics}
-                onChangeNode={(id) => {
-                    alert(id);
+                onChangeNode={(_id) => {
+                    setMode('READ');
+                    setId(_id);
                 }}
             ></Nav>
-            <Article title="Welcome" body="Hello, WEB"></Article>
+            {content}
         </div>
     );
 }
