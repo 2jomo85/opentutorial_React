@@ -6,7 +6,7 @@ function Header(props) {
             <h1>
                 <a
                     href="/"
-                    onClick={function (event) {
+                    onClick={(event) => {
                         event.preventDefault();
                         props.onChangeNode();
                     }}
@@ -23,7 +23,16 @@ function Nav(props) {
         let t = props.topics[i];
         lis.push(
             <li key={t.id}>
-                <a href={'/read' + t.id}>{t.title}</a>
+                <a
+                    id={t.id}
+                    href={'/read' + t.id}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        props.onChangeNode(event.target.id);
+                    }}
+                >
+                    {t.title}
+                </a>
             </li>
         );
     }
@@ -52,11 +61,16 @@ function App() {
         <div>
             <Header
                 title="WEB"
-                onChangeNode={function () {
+                onChangeNode={() => {
                     alert('Header');
                 }}
             ></Header>
-            <Nav topics={topics}></Nav>
+            <Nav
+                topics={topics}
+                onChangeNode={(id) => {
+                    alert(id);
+                }}
+            ></Nav>
             <Article title="Welcome" body="Hello, WEB"></Article>
         </div>
     );
