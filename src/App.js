@@ -4,7 +4,15 @@ function Header(props) {
     return (
         <header>
             <h1>
-                <a href="/">{props.title}</a>
+                <a
+                    href="/"
+                    onClick={function (event) {
+                        event.preventDefault();
+                        props.onChangeNode();
+                    }}
+                >
+                    {props.title}
+                </a>
             </h1>
         </header>
     );
@@ -42,7 +50,12 @@ function App() {
     ];
     return (
         <div>
-            <Header title="WEB"></Header>
+            <Header
+                title="WEB"
+                onChangeNode={function () {
+                    alert('Header');
+                }}
+            ></Header>
             <Nav topics={topics}></Nav>
             <Article title="Welcome" body="Hello, WEB"></Article>
         </div>
